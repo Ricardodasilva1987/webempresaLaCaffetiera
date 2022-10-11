@@ -1,0 +1,45 @@
+
+{% extends 'core/base.html' %}
+{%load static %}
+{% block tittle %}
+La Caffettiera | Blog
+{% endblock %}
+
+{% block content %}
+{% for p in posts %}
+
+<section class="page-section cta">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-9 mx-auto">
+        <div class="cta-innerv text-center rounded">
+          <h2 class="section-heading mb-5">
+            <span class="section-heading-upper">{{p.published|date:"SHORT_DATE_FORMAT"}}</span> <!-- con date:"SHORT_DATE_FORMAT" se puede cambiar el formato de la fecha -->
+            <span class="section-heading-lower">{{p.title}}</span>
+          </h2>
+          <p class="mb-0">
+            <img class="mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="{% static 'core/img/products-01.jpg' %}" alt="">
+          </p>
+          <p class="mb-0 mbt">
+            {{ p.content|linebreaks}} <!-- con Line break se agrega saltos de linea -->
+          </p>
+          <p class="mb-0 mbt">
+              <span class="section-heading-under">Publicado por <em><b>{{p.author}}</b>
+            </em>
+             {% for categories in p.categories.all %}
+             <a href="{% url 'category' categories.id %}" class ="link"> {{categories.name}}</a>
+           {% if not forloop.last %},{% endif %} 
+            {% endfor %}</em>
+            </span>
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endfor %}
+ 
+
+{% endblock %}
